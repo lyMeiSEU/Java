@@ -2,15 +2,22 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public class dislister {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		dislister lister=new dislister();
-		dirfilter filter=new dirfilter(".*log");
+		String PATH,TYPE;
+		Scanner in=new Scanner(System.in);
+		System.out.print("Please enter the path you want to search.");
+		PATH=in.nextLine();
+		System.out.print("Please enter the type you want to search for.");
+		TYPE=in.nextLine();
+		dirfilter filter=new dirfilter(TYPE);
 		Comparator comparator=new DescendingAlphabeticComparator();
-		lister.listDirectory(new File("c:/Windows"), filter, comparator);
+		lister.listDirectory(new File(PATH), filter, comparator);
 	}
 	
 	public void listDirectory(File file,FilenameFilter filter,Comparator comparator)
@@ -33,4 +40,5 @@ public class dislister {
 			}
 		}
 	}
+
 }
