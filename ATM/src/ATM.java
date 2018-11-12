@@ -3,56 +3,82 @@ import java.util.regex.Pattern;
 
 public class ATM {
 
+	public static int MAXACCONT = 100;
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Account acc = new Account("ly", "71117408", "10000");
-		System.out.println(acc.UserName);
-		System.out.println(acc.getpassword());
-		System.out.println(acc.getmoney());
-		Scanner in = new Scanner(System.in);
+		process();
+	}
 
+	public static void process() {
+		Account[] acc = new Account[MAXACCONT];
+		acc[0] = new Account(String.valueOf("ly".hashCode()), String.valueOf("71117408".hashCode()), "10000");
+		Scanner in = new Scanner(System.in);
+		int i = 0;
 		while (true) {
-			System.out.println("Please Enter your username and password");
-			String username = in.nextLine();
-			String password = in.nextLine();
-			if (!username.equalsIgnoreCase(acc.UserName) || !password.equalsIgnoreCase(acc.getpassword())) {
-				System.out.println("ERROR password or username");
-				continue;
+			System.out.print("Login Or Create Account?(1/2)");
+			String choice1 = in.nextLine();
+			if (choice1.equalsIgnoreCase("2")) {
+				System.out.println("Please Enter your username and password");
+				String username = in.nextLine();
+				
+				String password = in.nextLine();
+				acc[++i] = new Account(String.valueOf(username.hashCode()), String.valueOf(password.hashCode()), "0");
 			}
-			System.out.print("Enter success");
-			System.out.println(" Please choose which services do you want.");
-			System.out.println("1.Balance inquiry");
-			System.out.println("2.Deposit");
-			System.out.println("3.Withdraw");
-			System.out.println("4.Exit");
-			while (true) {
-				String choice = in.nextLine();
-				if (choice.equalsIgnoreCase("1"))
-					System.out.println(acc.getmoney());
-				else if (choice.equalsIgnoreCase("2")) {
-					System.out.println("How much do you want to deposit?");
-					String money = in.nextLine();
-					if (isInteger(money)) {
-						long Money = acc.getmoney() + Long.parseLong(money);
-						acc.setmoney(String.valueOf(Money));
-						System.out.print("Deposit successfully! And now you have:" + acc.getmoney());
-					} else
-						System.out.println("Please enter an number.");
-				} else if (choice.equalsIgnoreCase("3")) {
-					System.out.println("How much do you want to get?");
-					String money = in.nextLine();
-					if (isInteger(money)) {
-						long Money = acc.getmoney() - Long.parseLong(money);
-						acc.setmoney(String.valueOf(Money));
-						System.out.println("Withdraw successfully! And now you have:" + acc.getmoney());
-					} 
-					else if (choice.equalsIgnoreCase("4"))
+			if (choice1.equalsIgnoreCase("1")) {
+				System.out.println("Please Enter your username and password");
+				String username = in.nextLine();
+				String password = in.nextLine();
+				int q = 0;
+				while (q <= acc.length) {
+					q++;
+					if (String.valueOf(username.hashCode()).equalsIgnoreCase(acc[i].UserName) && String.valueOf(password.hashCode()).equalsIgnoreCase(acc[i].getpassword())) {
+						System.out.print("Enter success");
 						break;
+					} else if (q == acc.length) {
+						System.err.println("ERROR password or username");
+						q = 0;
+						System.out.println("Please Enter your username and password");
+						username = in.nextLine();
+						password = in.nextLine();
+					}
+				}
+
+				System.out.println(" Please choose which services do you want.");
+				System.out.println("1.Balance Query");
+				System.out.println("2.Deposit");
+				System.out.println("3.Withdraw");
+				System.out.println("4.Exit");
+				a:while (true) {
+					String choice2 = in.nextLine();
+					if (choice2.equalsIgnoreCase("1"))
+						System.out.println(acc[i].getmoney());
+					else if (choice2.equalsIgnoreCase("2")) {
+						System.out.println("How much do you want to deposit?");
+						String money = in.nextLine();
+						if (isInteger(money)) {
+							long Money = acc[i].getmoney() + Long.parseLong(money);
+							acc[i].setmoney(String.valueOf(Money));
+							System.out.print("Deposit successfully! And now you have:" + acc[i].getmoney());
+						} else
+							System.out.println("Please enter an number.");
+					} else if (choice2.equalsIgnoreCase("3")) {
+						System.out.println("How much do you want to get?");
+						String money = in.nextLine();
+						if (isInteger(money)) {
+							long Money = acc[i].getmoney() - Long.parseLong(money);
+							acc[i].setmoney(String.valueOf(Money));
+							System.out.println("Withdraw successfully! And now you have:" + acc[i].getmoney());
+						}
+					}
+					else if (choice2.equalsIgnoreCase("4"))
+						break a;
 					else
-						System.out.println("Please enter an number.");
+						System.err.println("Please enter an number.");
 				}
 			}
 		}
+
 	}
 
 	public static boolean Enter(Account acc, String name, String password) {
