@@ -1,0 +1,13 @@
+SELETE DISTINCT store_name FROM Store_Information
+
+SELETE store_name FROM Stroe_Information WHERE Sales>500
+
+SELETE store_name FROM Stroe_Information WHERE Sales>100 AND Sales<500
+
+SELETE*FORM Stroe_Information WHERE store_name LIKE '%AN%' ORDER BY sales DESC
+
+INSERT INTO Store_Information (store_name,Sales,Date) VALUES('/','/','/')
+
+UPDATE Store_Information SET Sales=1000 WHERE store_name="Los Angeles"
+
+DELETE FROM Stroe_Information WHERE store_name="Los Angeles"
